@@ -1,0 +1,44 @@
+<?php
+class NumbersTestCase extends DrupalUnitTestCase {
+
+    public static function getInfo() {
+        return array(
+            'name' => "A Numbers to Words Unit Test",
+            'description' => "Test that checks number to word conversion",
+            'group' => "A Numbers to Words Unit Test",
+        );
+    }
+    function testNumbers1() {
+        //Arrange
+        $input = 20;
+
+        //Act
+        $result = convert_numbers($input);
+
+        //Assert
+        $this->assertEqual($result, "twenty");
+    }
+
+
+    function testNumbers2() {
+        //Arrange
+        $input = 40;
+
+        //Act
+        $result = convert_numbers($input);
+
+        //Assert
+        $this->assertEqual($result, "forty");
+    }
+
+    function testNumbers3() {
+        //Arrange
+        $input = 46;
+
+        //Act
+        $result = convert_numbers($input);
+
+        //Assert
+        $this->assertEqual($result, "forty six");
+    }
+}

@@ -1,0 +1,6 @@
+name = Numbers to Words
+description = Will translates user input integers into written words.
+package = "Epicodus Examples"
+core = 7.x
+files[] = numbers_to_words.module
+files[] = tests/numbers_to_words.test

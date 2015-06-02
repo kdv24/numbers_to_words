@@ -1,0 +1,71 @@
+<?php
+
+    function numbers_to_words_menu() {
+        $items['numbers'] = array(
+            'title' => 'Numbers to Words Converter',
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('numbers_to_words_form'),
+            'access callback' => TRUE,
+            'type' => MENU_NORMAL_ITEM,
+        );
+        $items['numbers_to_words_result'] = array(
+            'title' => "Your result",
+            'page callback' => 'numbers_to_words_result',
+            'access callback' => TRUE,
+            'type' => MENU_CALLBACK,
+        );
+        return $items;
+    }
+
+
+
+
+    function numbers_to_words_form(){
+        $form['input'] = array(
+            '#title' => 'Your number to convert',
+            '#type' => 'textfield',
+            '#description' => t('Please enter the number you want to convert.'),
+        );
+
+        $form['submit'] = array(
+            '#type' => 'submit',
+            '#value' => 'Convert to Words',
+        );
+
+        return $form;
+}
+
+function convert_numbers($input){
+    $ones_array = [""=> 0, "one"=>  1, "two"=>  2, "three"=>  3, "four"=>  4, "five"=>  5, "six"=>  6, "seven"=>  7, "eight"=>  8, "nine"=>  9, "ten"=> 10, "eleven"=> 11, "twelve"=> 12, "thirteen"=> 13, "fourteen"=> 14, "fifteen" => 15, "sixteen" => 16, "seventeen" => 17, "eighteen" => 18, "nineteen" => 19, "twenty" => 20];
+    $tens_array = ["twenty"=> 2, "thirty" => 3, "forty" => 4, "fifty" => 5, "sixty" => 6, "seventy" => 7, "eighty" => 8, "ninety" => 9];
+    // $tens = array();
+    // $ones = array();
+    if ($input <= 20) {
+        $match = array_keys($ones_array, $input);
+        return implode($match);
+    }
+    elseif ($input>20 && $input<=99){
+        $split_number = str_split($input);
+        $first_digit = $split_number[0];
+        $second_digit = $split_number[1];
+        $tens = array_keys($tens_array, $first_digit);
+        $ones = array_keys($ones_array, $second_digit);
+        array_push($tens, $ones);
+        return implode($tens);
+    }
+
+
+
+}
+
+function numbers_to_words_form_submit($form, &$form_state) {
+    $input = $form_state['values']['input'];
+    $_SESSION['numbers_output'] = convert_numbers($input);
+
+    $form_state['redirect'] = 'numbers_to_words_result';
+}
+
+
+    function numbers_to_words_result() {
+
+    }
